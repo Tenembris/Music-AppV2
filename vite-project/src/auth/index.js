@@ -9,5 +9,9 @@ export const SCOPES = [
   "user-read-private",
   "user-library-read",
   "playlist-read-private",
+  "streaming",
+  "user-read-playback-state",
+  "user-modify-playback-state",
 ];
+
 export const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
