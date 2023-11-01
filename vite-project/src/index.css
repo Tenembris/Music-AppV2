@@ -69,7 +69,7 @@ body {
 }
 
 h2 {
-  color: white;
+  color: #f0f0f0;
 }
 @keyframes typing {
   40%,
@@ -96,7 +96,7 @@ h2 {
 .top10Tracks h2 {
   font-size: 1em;
 }
-
+/* 
 .top10Tracks {
   display: flex;
   flex-direction: column;
@@ -107,10 +107,10 @@ h2 {
   -webkit-box-shadow: 14px 14px 24px 0px rgba(0, 0, 0, 1);
   -moz-box-shadow: 14px 14px 24px 0px rgba(0, 0, 0, 1);
   box-shadow: 14px 14px 24px 0px rgba(0, 0, 0, 1);
-}
+} */
 
 .TopElements {
-  margin: 10px auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: row-reverse;
   justify-content: left;
@@ -119,8 +119,31 @@ h2 {
   align-items: center;
 }
 
+.TopElements img {
+  cursor: pointer;
+}
+
+.TopElements h3 {
+  color: rgb(245, 245, 245);
+
+  font-size: 1.5em;
+  position: relative;
+  top: 40px;
+  left: -60px;
+  text-align: center;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8.5px);
+  padding: 12px;
+  /* text-decoration: underline; */
+}
+
 .DivGridTop {
-  background-color: #191919;
+  background-color: #252424;
   width: 100vw;
 
   display: flex;
@@ -131,5 +154,332 @@ h2 {
 
 .ProfileSection {
   width: 100vw;
-  height: 80vh;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.ProfileSection h2 {
+  font-size: 2em;
+}
+
+.optionFirst {
+  color: grey;
+}
+
+.optionSecond {
+  color: #f0f0f0;
+}
+
+.section {
+  width: 100vw;
+  height: 90vh;
+}
+
+.longerSection {
+  height: 100vh;
+  height: 110vh;
+}
+
+.blurTruck {
+  width: 100%;
+  height: 101%;
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.blurTruck h2 {
+  font-size: 3em;
+  position: relative;
+  padding-left: 40px;
+  padding-top: 20px;
+  top: 30px;
+  left: 30px;
+}
+/* .blurTruck > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+} */
+
+.informationContainer {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-self: center;
+  padding: 10em;
+}
+
+.TrackInfo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  align-items: center;
+}
+
+.lightText {
+  color: #f0f0f0;
+}
+
+.TrackInfo h3 {
+  color: #f0f0f0;
+  font-size: 2em; /* Domyślny kolor tekstu */
+}
+.TrackInfo h4 {
+  color: #f0f0f0;
+  font-size: 1.2em; /* Domyślny kolor tekstu */
+}
+
+.TrackInfo div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.TrackInfo.lightBackground h3 {
+  color: #f0f0f0; /* Kolor tekstu dla jasnego tła */
+}
+
+.favSong {
+  background-color: black;
+}
+
+.TopContainer {
+  height: 100%;
+}
+
+.TopContainer h2 {
+  font-size: 3em;
+  padding-left: 40px;
+  padding-top: 20px;
+  position: relative;
+  right: 30px;
+  top: 30px;
+}
+
+.grid2ColumnsTops {
+  display: none;
+}
+
+.TopContainer {
+  /* Tworzymy flexbox kontener z osią kolumny */
+  display: flex;
+  flex-direction: column;
+}
+
+.top10Tracks {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+}
+
+.top10Tracks img {
+  width: 160px;
+  height: 160px;
+}
+
+.TracksWrapper {
+  display: flex;
+}
+
+.TrackColumn {
+  flex: 1; /* Każda kolumna ma równe miejsce */
+}
+
+.TopContainer div h2 {
+  font-size: 3em;
+  padding-right: 60px;
+}
+
+.TopContainer > div {
+  text-align: right;
+
+  padding-top: 20px;
+}
+
+.shadow {
+  -webkit-box-shadow: 7px 3px 19px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 7px 3px 19px 0px rgba(0, 0, 0, 1);
+  box-shadow: 7px 3px 19px 0px rgba(0, 0, 0, 1);
+}
+
+.termsButtonContainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+
+  position: relative;
+  left: 60px;
+}
+
+.termsButtonContainer button {
+  padding: 10px;
+  border-radius: 20px;
+  border: solid 1px red;
+  background-color: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+.radarComponent {
+  width: 700px;
+  height: 700px;
+}
+
+.topGenreSection {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+}
+
+.topGenreSection ul {
+  color: #f0f0f0;
+  text-decoration: none;
+  list-style: none;
+  font-size: 2.5em;
+  font-weight: 400;
+}
+
+.MoodContainer {
+  height: 100%;
+  text-align: right;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.MoodContainer h2 {
+  font-size: 3em;
+  padding-left: 40px;
+  padding-top: 20px;
+  position: relative;
+  right: 30px;
+  top: 30px;
+  padding-right: 60px;
+}
+
+.MoodContainer > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.textContainer {
+  align-self: right;
+  width: 500px;
+  height: 300px;
+  text-wrap: wrap;
+  color: white;
+  font-size: 1.5em;
+}
+
+.MoodContainer div h3 {
+  position: relative;
+  left: 32%;
+  top: 15%;
+}
+
+.progresBars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.progresBars div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.moods {
+  background: transparent;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.moods::-webkit-progress-value {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.moods::-webkit-progress-bar {
+  background-color: RGB(245 1 1);
+  border-radius: 10px;
+}
+.progresBarElements {
+  width: 100%;
+}
+
+.PlayerRSWP {
+  background: rgba(0, 0, 0, 0.18) !important;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8.5px);
+  position: fixed;
+  bottom: -100;
+  left: 0;
+}
+
+.PlayerRSWP.open {
+  background: rgba(0, 0, 0, 0.18) !important;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8.5px);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  transition: 0.5s ease-in-out;
+}
+
+.PlayerRSWP * {
+  text-decoration: none;
+  color: white;
+}
+
+.PlayerRSWP p {
+  color: #f0f0f0;
+}
+
+._ContentRSWP * {
+  color: white !important;
+}
+
+.profilePhoto {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid #f0f0f0;
+  margin-right: 20px;
+  overflow: hidden; /* This is important for hiding the parts of the image outside the circle */
+}
+
+.profilePhoto img {
+  width: 100%; /* Make sure the image takes up 100% of the container */
+  height: 100%; /* Make sure the image takes up 100% of the container */
+  object-fit: cover; /* This ensures the image covers the entire container without stretching */
 }

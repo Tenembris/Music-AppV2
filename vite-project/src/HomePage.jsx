@@ -1,17 +1,19 @@
 // No need to import React since it's not used in this file
 
-import {
-  CLIENT_ID,
-  CLIENT_SECRET,
-  SPOTIFY_AUTHORIZE_ENDPOINT,
-  REDIRECT_URL_AFTER_LOGIN,
-  SCOPES_URL_PARAM,
-} from "./auth";
+// import {
+//   CLIENT_ID,
+//   CLIENT_SECRET,
+//   SPOTIFY_AUTHORIZE_ENDPOINT,
+//   REDIRECT_URL_AFTER_LOGIN,
+//   SCOPES_URL_PARAM,
+// } from "./auth";
 
 const HomePage = () => {
-  const handleLogin = () => {
-    window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
-  };
+  const AUTH_URL =
+    "https://accounts.spotify.com/authorize?client_id=cd5be52f32ac4bc884b551391ec442c6" +
+    "&response_type=code" +
+    "&redirect_uri=http://localhost:5173/profile" +
+    "&scope=streaming%20user-read-email%20user-read-private%20user-read-playback-state%20user-modify-playback-state%20user-top-read";
   return (
     <>
       <div className="wrapper">
@@ -31,7 +33,7 @@ const HomePage = () => {
           </li>
         </ul>
       </div>
-      <button onClick={() => handleLogin()}>Login</button>
+      <a href={AUTH_URL}>Login with spotify</a>
     </>
   );
 };
