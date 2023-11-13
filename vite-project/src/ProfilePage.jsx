@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Player from "./Player";
 import useAuth from "./useAuth";
+// import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Chart as ChartJS,
@@ -24,9 +26,12 @@ ChartJS.register(
 );
 
 const ProfilePage = ({ code }) => {
-  // Tworzymy nowy div
-
   const accessToken = useAuth(code);
+  // const history = useHistory();
+
+  // const handleButtonClick = () => {
+  //   history.push("/top50");
+  // };
 
   const [playlists, setPlaylists] = useState({});
   const [artists, setArtists] = useState({});
@@ -39,18 +44,21 @@ const ProfilePage = ({ code }) => {
   const [tracks2, setTracks2] = useState([]);
   const [longArtists, setLongArtists] = useState([]);
   const [topArtistsTrack, setTopArtistsTrack] = useState([]);
+  const [recommendedTracks, setRecommendedTracks] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isDivAdded, setIsDivAdded] = useState(false);
+  const [isPaused, setPaused] = useState(false);
 
   const togglePlayer = () => {
-    setIsOpen((prevState) => !prevState);
+    setPaused((prev) => !prev);
   };
 
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "# of Votes",
+        label: "Top Genres",
         data: [],
         backgroundColor: "rgba(0, 99, 132, 0.2)",
         borderColor: "rgba(245, 1, 1, 1)",
@@ -76,12 +84,11 @@ const ProfilePage = ({ code }) => {
 
   // console.log("Token:", accessToken);
 
-  let idTopArtist = longArtists.items?.[0]?.id;
   let timePeriod = "long_term";
   const PLAYLISTS_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
   const TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks?time_range=${timePeriod}&limit=12`;
   const TRACKS_ENDPOINT2 = `https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50`;
-  const TOP_ARTIST_TRACK = `https://api.spotify.com/v1/artists/${idTopArtist}/top-tracks`;
+  // const TOP_ARTIST_TRACK = `https://api.spotify.com/v1/artists/${longArtists[0].items[0]?.id}/top-tracks`;
 
   const ARTISTS_ENDPOINT =
     "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=12";
@@ -93,6 +100,8 @@ const ProfilePage = ({ code }) => {
   const MOOD_ENDPOINT =
     "https://api.spotify.com/v1/audio-features?ids=7ouMYWpwJ422jRcDASZB7P%2C4VqPOruhp5EdPBeR92t6lQ%2C2takcwOaAZWiXQijPHIx7B";
 
+  const AVAIBLE_GENRES =
+    "https://api.spotify.com/v1/recommendations/available-genre-seeds";
   // Function to fetch data
   const getData = async (endpoint, setFunction, storageKey) => {
     const storedData = sessionStorage.getItem(storageKey);
@@ -114,6 +123,25 @@ const ProfilePage = ({ code }) => {
       }
     }
   };
+
+  useEffect(() => {
+    var existingDiv = document.querySelector("._ActionsRSWP.__1irer0f");
+
+    if (existingDiv) {
+      var newDiv = document.createElement("div");
+      newDiv.className = "myNewDiv";
+
+      var newButton = document.createElement("button");
+      newButton.innerHTML = "Mój przycisk";
+
+      newButton.addEventListener("click", function () {
+        console.log("Button clicked!");
+      });
+
+      newDiv.appendChild(newButton);
+      existingDiv.appendChild(newDiv);
+    }
+  }, []);
 
   // Function to get genres
   const getGenres = async () => {
@@ -147,7 +175,7 @@ const ProfilePage = ({ code }) => {
         labels: sortedGenreNames,
         datasets: [
           {
-            label: "# of Votes",
+            label: "Top Genres",
             data: sortedGenreCounts,
             backgroundColor: "rgba(255, 99, 132, 0.2)",
             borderColor: "rgba(255, 99, 132, 1)",
@@ -203,24 +231,40 @@ const ProfilePage = ({ code }) => {
       console.error(error);
     }
   };
+
   function togglePlayerClass() {
+    console.log(isDivAdded);
+
     document.querySelectorAll(".PlayerRSWP").forEach((element) => {
-      element.classList.toggle("open");
+      element.classList.add("open");
 
-      var existingDiv = document.querySelector(". _ActionsRSWP.__1irer0f");
+      if (!isDivAdded) {
+        var existingDiv = document.querySelector("._ActionsRSWP.__1irer0f");
 
-      if (existingDiv) {
-        var newDiv = document.createElement("div");
-        newDiv.className = "myNewDiv";
+        if (existingDiv) {
+          var newDiv = document.createElement("div");
+          newDiv.className = "myNewDiv";
 
-        var newButton = document.createElement("button");
-        newButton.innerHTML = "Mój przycisk";
+          var newButton = document.createElement("button");
+          newButton.innerHTML = "Close";
 
-        newDiv.appendChild(newButton);
-        existingDiv.appendChild(newDiv);
+          newButton.addEventListener("click", function () {
+            document.querySelectorAll(".PlayerRSWP").forEach((element) => {
+              element.classList.remove("open");
+              togglePlayer();
+            });
+
+            console.log("Button clicked!");
+          });
+
+          newDiv.appendChild(newButton);
+          existingDiv.appendChild(newDiv);
+          setIsDivAdded(true);
+        }
       }
     });
   }
+
   useEffect(() => {
     const fetchData = async () => {
       await getGenres();
@@ -239,6 +283,10 @@ const ProfilePage = ({ code }) => {
       );
       getMoodDataForTracks();
     };
+
+    getData(AVAIBLE_GENRES, setGenres, "AvaiblegenresSessionData");
+
+    getData(recommendedTracks, setRecommendedTracks, "recommendedTracks");
 
     fetchData();
   }, []);
@@ -405,6 +453,9 @@ const ProfilePage = ({ code }) => {
     sessionStorage.getItem("artistsSessionData")
   );
 
+  const backgroundImage =
+    storedData && storedData.items[0]?.album?.images[0]?.url;
+
   return (
     <div className="DivGridTop">
       {profile.display_name && profile.images && (
@@ -415,9 +466,18 @@ const ProfilePage = ({ code }) => {
           <h2>{profile.display_name}</h2>
           <div className="NavButtons">
             <button>Your Page</button>
-            <button>Artists</button>
 
-            <button>Songs</button>
+            <Link to="/top50artists" className="button-link">
+              Top 50 artists
+            </Link>
+
+            <Link to="/top50tracks" className="button-link">
+              Top 50 Tracks
+            </Link>
+
+            <Link to="/recommendations" className="button-link">
+              recommendations
+            </Link>
           </div>
         </div>
       )}
@@ -467,6 +527,7 @@ const ProfilePage = ({ code }) => {
                       src={tracks2.items[0]?.album?.images[1]?.url}
                       onClick={() => handleTrackClick(tracks.items[0].uri)}
                       alt=""
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -509,6 +570,7 @@ const ProfilePage = ({ code }) => {
                                 togglePlayerClass();
                               }}
                               alt=""
+                              loading="lazy"
                             />
                           </div>
                         ))}
@@ -562,6 +624,7 @@ const ProfilePage = ({ code }) => {
                         handleTrackClick(tracks.items[0].uri);
                       }}
                       alt=""
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -604,7 +667,11 @@ const ProfilePage = ({ code }) => {
                               <h3>
                                 {index + 1 + columnIndex * 4} / {artist.name}
                               </h3>
-                              <img src={artist.images[0]?.url} alt="" />
+                              <img
+                                src={artist.images[0]?.url}
+                                alt=""
+                                loading="lazy"
+                              />
                             </div>
                           ))}
                       </div>
@@ -731,6 +798,7 @@ const ProfilePage = ({ code }) => {
         accessToken={accessToken}
         trackUri={selectedTrackUri}
         togglePlayer={togglePlayer}
+        isPaused={isPaused}
       />
     </div>
   );
@@ -743,7 +811,7 @@ export default ProfilePage;
 // top 1 artist, more info about him
 //dodaj guzik zamykjący platera
 // top 10 genres 2 grid with them
-//genre chart
+
 // to mood add obscure and popolarity rating
 //dymek na hover
 //https://www.npmjs.com/package/@check-light-or-dark/image

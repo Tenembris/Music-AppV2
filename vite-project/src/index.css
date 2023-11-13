@@ -160,10 +160,28 @@ h2 {
   align-items: center;
   flex-direction: column;
   gap: 30px;
+  padding: 20px;
+  padding-top: 50px;
 }
 
 .ProfileSection h2 {
   font-size: 2em;
+}
+
+.NavButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: auto;
+}
+
+.NavButtons button {
+  padding: 10px;
+  border-radius: 20px;
+  border: solid 1px red;
+  background-color: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
 }
 
 .optionFirst {
@@ -482,4 +500,79 @@ h2 {
   width: 100%; /* Make sure the image takes up 100% of the container */
   height: 100%; /* Make sure the image takes up 100% of the container */
   object-fit: cover; /* This ensures the image covers the entire container without stretching */
+}
+
+.myNewDiv button {
+  position: fixed;
+
+  bottom: 85px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 10000000 !important;
+  pointer-events: all !important;
+  background-color: transparent;
+  border: none;
+}
+
+.button-link {
+  display: inline-block;
+  padding: 10px;
+
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  background: #252424;
+  border: 1px solid #f50101;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.allImgTrack {
+  width: 120px;
+  height: 120px;
+}
+
+.TopTrackLayout {
+  width: 90vw;
+  color: white;
+  display: flex;
+  flex-direction: row-reverse;
+  /* align-items: center; */
+  justify-content: left;
+  margin: 30px;
+  align-items: center;
+  gap: 20px;
+}
+
+.GeneratedRecommendations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+.RecommendationElement {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+.RecommendationElement img {
+  max-width: 80%;
+}
+
+.recommendationContainer h2 {
+  color: #f0f0f0;
+}
+
+.genre-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four columns */
+  grid-gap: 10px; /* Spacing between buttons */
+  max-width: 800px; /* Adjust as needed */
+  margin: 0 auto; /* Center the grid */
+}
+
+.genre-button {
+  width: 100%;
 }

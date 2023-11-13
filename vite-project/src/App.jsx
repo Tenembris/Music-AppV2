@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 import HomePage from "./HomePage";
 import ProfileComponent from "./ProfilePage";
+import Top50TracksComponent from "./Top50TracksComponent";
+import Top50ArtistsComponent from "./Top50ArtistsComponent";
+import RecommendationsComponent from "./RecommendationsComponent";
 
 const code = new URLSearchParams(window.location.search).get("code");
 
@@ -22,6 +25,13 @@ const App = () => {
           exact
           path="/profile"
           element={<ProfileComponent code={code} />}
+        />
+        <Route exact path="/top50tracks" element={<Top50TracksComponent />} />
+        <Route exact path="/top50artists" element={<Top50ArtistsComponent />} />
+        <Route
+          exact
+          path="/recommendations"
+          element={<RecommendationsComponent />}
         />
       </Routes>
     </BrowserRouter>
