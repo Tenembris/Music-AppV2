@@ -552,7 +552,7 @@ h2 {
 
 .RecommendationElement {
   border: 1px solid #ccc;
-  padding: 10px;
+
   text-align: center;
   color: white;
 }
@@ -575,4 +575,101 @@ h2 {
 
 .genre-button {
   width: 100%;
+}
+
+.genre-container button,
+.mood-button {
+  padding: 10px;
+  border-radius: 20px;
+  border: solid 1px red;
+  background-color: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+.genre-container button:disabled,
+.mood-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.genre-container button:hover,
+.tempo-container button:hover,
+.mood-button:hover {
+  background-color: #f50101;
+}
+
+.genre-container button:active,
+.tempo-container button:active,
+.mood-button:active {
+  background-color: #f50101;
+}
+
+.tempo-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four columns */
+  grid-gap: 10px; /* Spacing between buttons */
+  max-width: 800px; /* Adjust as needed */
+  margin: 0 auto; /* Center the grid */
+}
+
+.tempo-container button,
+.genre-button {
+  padding: 10px;
+  border-radius: 20px;
+  border: solid 1px red;
+  background-color: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
+  max-width: 250px;
+}
+
+.RecommenedTrackWrapper img {
+  width: 100px;
+  height: 100px;
+  gap: 5px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.RecommenedTrackWrapper .TopElements {
+  padding: -50px !important;
+  margin-right: -50px;
+}
+
+.DataForRecommendations {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.DataForRecommendations .top10Tracks {
+  width: 60%;
+}
+
+.recomendations-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.RecommendationElementGlassMorph {
+  background: rgba(0, 0, 0, 0.2);
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.6px);
+  -webkit-backdrop-filter: blur(5.6px);
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+
+.RecommendationElementGlassMorph :first-child {
+  padding: 10px;
+}
+
+.RecommendationElementGlassMorph :first-child img {
+  width: 60%;
 }

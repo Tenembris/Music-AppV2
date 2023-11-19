@@ -165,134 +165,151 @@ const RecommendationsComponent = () => {
   );
 
   return (
-    <div>
-      <h1>Custom Your Recomendations!</h1>
-      <div className="recommendationContainer">
-        <div>
-          <h2>Choose Genres</h2>
-          <div className="genre-container">
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("rock")}
-              disabled={
-                genreButtonsDisabled && !selectedGenres.includes("rock")
-              }
-            >
-              Rock
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("gym%20hardstyle")}
-              disabled={
-                genreButtonsDisabled &&
-                !selectedGenres.includes("gym%20hardstyle")
-              }
-            >
-              Hardstyle
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("pop")}
-              disabled={genreButtonsDisabled && !selectedGenres.includes("pop")}
-            >
-              Pop
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("rap")}
-              disabled={genreButtonsDisabled && !selectedGenres.includes("rap")}
-            >
-              Rap
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("chill")}
-              disabled={
-                genreButtonsDisabled && !selectedGenres.includes("chill")
-              }
-            >
-              Chill
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("idm")}
-              disabled={genreButtonsDisabled && !selectedGenres.includes("idm")}
-            >
-              IDM
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("metal")}
-              disabled={
-                genreButtonsDisabled && !selectedGenres.includes("metal")
-              }
-            >
-              Metal
-            </button>
-            <button
-              className="genre-button"
-              onClick={() => handleGenreClick("country")}
-              disabled={
-                genreButtonsDisabled && !selectedGenres.includes("country")
-              }
-            >
-              Country
-            </button>
+    <div className="Recommendations-Page">
+      <div className="recomendations-options">
+        <h1>Custom Your Recomendations!</h1>
+        <div className="recommendationContainer">
+          <div>
+            <h2>Choose Genres</h2>
+            <div className="genre-container">
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("rock")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("rock")
+                }
+              >
+                Rock
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("gym%20hardstyle")}
+                disabled={
+                  genreButtonsDisabled &&
+                  !selectedGenres.includes("gym%20hardstyle")
+                }
+              >
+                Hardstyle
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("pop")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("pop")
+                }
+              >
+                Pop
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("rap")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("rap")
+                }
+              >
+                Rap
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("chill")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("chill")
+                }
+              >
+                Chill
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("idm")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("idm")
+                }
+              >
+                IDM
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("metal")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("metal")
+                }
+              >
+                Metal
+              </button>
+              <button
+                className="genre-button"
+                onClick={() => handleGenreClick("country")}
+                disabled={
+                  genreButtonsDisabled && !selectedGenres.includes("country")
+                }
+              >
+                Country
+              </button>
+            </div>
           </div>
 
-          <h2>Choose Tempo</h2>
-          <button
-            onClick={() => handleTempoClick(80)}
-            disabled={tempoButtonsDisabled && selectedTempo.includes(60)}
-          >
-            slow/Largo largo 40-60 BPM
-          </button>
-          <button
-            onClick={() => handleTempoClick(80)}
-            disabled={tempoButtonsDisabled && selectedTempo.includes(80)}
-          >
-            peacful/Andante 76-108 BPM
-          </button>
-          <button
-            onClick={() => handleTempoClick(140)}
-            disabled={tempoButtonsDisabled && selectedTempo.includes(140)}
-          >
-            moderate/moderately 108-120 BPM
-          </button>
-          <button
-            onClick={() => handleTempoClick(140)}
-            disabled={tempoButtonsDisabled && selectedTempo.includes(140)}
-          >
-            fast Allegro 120-168 BPM
-          </button>
-          <button
-            onClick={() => handleTempoClick(140)}
-            disabled={tempoButtonsDisabled && selectedTempo.includes(140)}
-          >
-            presto very fast 168-200 BPM
-          </button>
+          <div>
+            <h2>Choose Tempo</h2>
+            <div className="tempo-container">
+              <button
+                onClick={() => handleTempoClick(80)}
+                disabled={tempoButtonsDisabled && selectedTempo.includes(60)}
+              >
+                slow/Largo largo 40-60 BPM
+              </button>
+              <button
+                onClick={() => handleTempoClick(80)}
+                disabled={tempoButtonsDisabled && selectedTempo.includes(80)}
+              >
+                peacful/Andante 76-108 BPM
+              </button>
+              <button
+                onClick={() => handleTempoClick(140)}
+                disabled={tempoButtonsDisabled && selectedTempo.includes(140)}
+              >
+                moderate/moderately 108-120 BPM
+              </button>
+              <button
+                onClick={() => handleTempoClick(140)}
+                disabled={tempoButtonsDisabled && selectedTempo.includes(140)}
+              >
+                fast Allegro 120-168 BPM
+              </button>
+              <button
+                onClick={() => handleTempoClick(140)}
+                disabled={tempoButtonsDisabled && selectedTempo.includes(140)}
+              >
+                presto very fast 168-200 BPM
+              </button>
+            </div>
+          </div>
 
-          <h2>Choose Mood</h2>
-          {Object.keys(moodRange).map((mood) => (
-            <button
-              key={mood}
-              onClick={() => handleMoodClick(mood)}
-              disabled={
-                moodButtonsDisabled &&
-                selectedMood.length > 0 &&
-                selectedMood[0].name !== mood
-              }
-            >
-              {mood.charAt(0).toUpperCase() + mood.slice(1)}
-            </button>
-          ))}
+          <div>
+            <h2>Choose Mood</h2>
+            <div className="tempo-container">
+              {Object.keys(moodRange).map((mood) => (
+                <button
+                  className="mood-button"
+                  key={mood}
+                  onClick={() => handleMoodClick(mood)}
+                  disabled={
+                    moodButtonsDisabled &&
+                    selectedMood.length > 0 &&
+                    selectedMood[0].name !== mood
+                  }
+                >
+                  {mood.charAt(0).toUpperCase() + mood.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div>
           <h2>Top Artists</h2>
           <div className="top10Tracks">
-            <div className="TracksWrapper">
-              {[0, 1, 2].map((columnIndex) => (
+            <div className="TracksWrapper RecommenedTrackWrapper">
+              {[0, 1, 2, 3].map((columnIndex) => (
                 <div key={columnIndex} className="TrackColumn">
                   {longArtistsSessionData.items
                     .slice(columnIndex * 4, columnIndex * 4 + 4)
@@ -318,11 +335,11 @@ const RecommendationsComponent = () => {
           </div>
         </div>
 
-        <div>
+        <div className="DataForRecommendations">
           <h2>Top Tracks</h2>
           <div className="top10Tracks">
-            <div className="TracksWrapper">
-              {[0, 1, 2].map((columnIndex) => (
+            <div className="TracksWrapper RecommenedTrackWrapper">
+              {[0, 1, 2, 3].map((columnIndex) => (
                 <div key={columnIndex} className="TrackColumn">
                   {longTermTracksSessionData.items
                     .slice(columnIndex * 4, columnIndex * 4 + 4)
@@ -348,23 +365,40 @@ const RecommendationsComponent = () => {
           </div>
         </div>
 
-        <button onClick={generateRecommendations}>
+        <button onClick={generateRecommendations} className="genre-button">
           Generate Recommendations
         </button>
       </div>
-
       {generatedRecommendationsData && (
         <div>
-          <h2>Generated Recommendations</h2>
+          <div>
+            <h2>Generated Recommendations</h2>
+          </div>
           <div className="GeneratedRecommendations">
             {generatedRecommendationsData.map((track, index) => (
-              <div key={index} className="RecommendationElement">
-                <h3>{track.name}</h3>
-                <p>
-                  Artists:{" "}
-                  {track.artists.map((artist) => artist.name).join(", ")}
-                </p>
-                <img src={track.album.images[1].url} alt={track.name} />
+              <div
+                key={index}
+                className="RecommendationElement"
+                style={{
+                  backgroundImage: `url(${track.album.images[2].url})`,
+                  backgroundSize: "cover", // Adjust as needed
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
+              >
+                <div className="RecommendationElementGlassMorph">
+                  {/* You can keep or remove the img tag depending on your needs */}
+                  <div>
+                    <img src={track.album.images[1].url} alt={track.name} />
+                  </div>
+                  <div>
+                    <h3>{track.name}</h3>
+                    <p>
+                      Artists:{" "}
+                      {track.artists.map((artist) => artist.name).join(", ")}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

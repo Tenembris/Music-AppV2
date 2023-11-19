@@ -277,7 +277,7 @@ const ProfilePage = ({ code }) => {
       getData(MOOD_ENDPOINT, setMood, "moodSessionData");
       getData(ARTISTS_ENDPOINT2, setLongArtists, "longArtistsSessionData");
       getData(
-        TOP_ARTIST_TRACK,
+        topArtistsTrack,
         setTopArtistsTrack,
         "topArtistsTrackSessionData"
       );
@@ -453,8 +453,36 @@ const ProfilePage = ({ code }) => {
     sessionStorage.getItem("artistsSessionData")
   );
 
+  useEffect(() => {
+    console.log(tracks2);
+  }, []);
+
   const backgroundImage =
     storedData && storedData.items[0]?.album?.images[0]?.url;
+
+  const containerStyle = {
+    width: "100%",
+    height: "100%",
+
+    background: `url(${backgroundImage}) no-repeat center center`,
+  };
+
+  if (backgroundImage) {
+    containerStyle.backgroundSize = "cover";
+  }
+
+  const aristsBackgroundImage =
+    storedArtists && storedArtists.items[0]?.images[0]?.url;
+
+  const containerStyleArtist = {
+    width: "100%",
+    height: "100%",
+    background: `url(${aristsBackgroundImage}) no-repeat center center`,
+  };
+
+  if (aristsBackgroundImage) {
+    containerStyleArtist.backgroundSize = "cover";
+  }
 
   return (
     <div className="DivGridTop">
@@ -484,15 +512,7 @@ const ProfilePage = ({ code }) => {
       {tracks.items && (
         <div>
           <div className="section">
-            <div
-              className="favSong"
-              style={{
-                background: `url(${storedData.items[0]?.album?.images[0]?.url}) no-repeat center center`,
-                backgroundSize: "cover",
-                width: "100%",
-                height: "100%",
-              }}
-            >
+            <div className="favSong" style={containerStyle}>
               <div className="blurTruck">
                 <h2>Fav Song</h2>
                 <div>
@@ -501,34 +521,54 @@ const ProfilePage = ({ code }) => {
                       className="TrackInfo"
                       style={{ color: isLightBackground ? "black" : "white" }}
                     >
-                      <div>
-                        <h3>{storedData.items[0]?.name}</h3>
-                        <h4 htmlFor="">Title</h4>
-                      </div>
-                      <div>
-                        <h3>{tracks2.items[0]?.artists[0]?.name}</h3>
-                        <h4 htmlFor="">Artists</h4>
-                      </div>
-                      <div>
-                        <h3>{tracks2.items[0]?.album?.release_date}</h3>
-                        <h4 htmlFor="">Release Date</h4>
-                      </div>
-                      <div>
-                        <h3>{mood?.audio_features[0]?.tempo}</h3>
-                        <h4>Tempo</h4>
-                      </div>
-                      <div>
-                        <h3>{genres.genres}</h3>
-                        <h4 htmlFor="">Genre</h4>
-                      </div>
+                      {tracks2.items && tracks2.items.length > 0 && (
+                        <div>
+                          <h3>{tracks2.items[0]?.name}</h3>
+                          <h4>Title</h4>
+                        </div>
+                      )}
+
+                      {tracks2.items && tracks2.items.length > 0 && (
+                        <div>
+                          <h3>{tracks2.items[0]?.artists[0]?.name}</h3>
+                          <h4>Artists</h4>
+                        </div>
+                      )}
+
+                      {tracks2.items && tracks2.items.length > 0 && (
+                        <div>
+                          <h3>{tracks2.items[0]?.album?.release_date}</h3>
+                          <h4>Release Date</h4>
+                        </div>
+                      )}
+
+                      {mood?.audio_features[0] &&
+                        mood.audio_features[0]?.tempo !== null &&
+                        mood.audio_features[0]?.tempo !== 0 && (
+                          <div>
+                            <h3>{mood.audio_features[0]?.tempo}</h3>
+                            <h4>Tempo</h4>
+                          </div>
+                        )}
+
+                      {genres.genres !== null &&
+                        genres.genres !== undefined &&
+                        genres.genres !== 0 && (
+                          <div>
+                            <h3>{genres.genres}</h3>
+                            <h4>Genre</h4>
+                          </div>
+                        )}
                     </div>
-                    <img
-                      className="shadow"
-                      src={tracks2.items[0]?.album?.images[1]?.url}
-                      onClick={() => handleTrackClick(tracks.items[0].uri)}
-                      alt=""
-                      loading="lazy"
-                    />
+
+                    {tracks2.items && tracks2.items.length > 0 && (
+                      <img
+                        className="shadow"
+                        src={tracks2.items[0]?.album?.images[1]?.url}
+                        onClick={() => handleTrackClick(tracks.items[0].uri)}
+                        alt=""
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -581,51 +621,48 @@ const ProfilePage = ({ code }) => {
             </div>
           </div>
           <div className="section">
-            <div
-              className="favSong"
-              style={{
-                background: `url(${longArtists.items[0]?.images[0]?.url}) no-repeat center center`,
-                backgroundSize: "cover",
-                width: "100%",
-                height: "100%",
-              }}
-            >
+            <div className="favSong" style={containerStyleArtist}>
               <div className="blurTruck">
                 <h2>Fav Artist</h2>
                 <div>
                   <div className="informationContainer">
-                    <div
-                      className="TrackInfo"
-                      style={{ color: isLightBackground ? "black" : "white" }}
-                    >
-                      <div>
-                        <h3>{longArtists.items[0]?.name}</h3>
-                        <h4 htmlFor="">Name</h4>
-                      </div>
+                    {longArtists?.items && longArtists.items.length > 0 && (
+                      <div
+                        className="TrackInfo"
+                        style={{ color: isLightBackground ? "black" : "white" }}
+                      >
+                        <div>
+                          <h3>{longArtists.items[0]?.name}</h3>
+                          <h4 htmlFor="">Name</h4>
+                        </div>
 
-                      <div>
-                        {longArtists.items[0]?.genres.length > 0 ? (
-                          <h3>{longArtists.items[0]?.genres}</h3>
-                        ) : (
-                          <h3>-</h3>
-                        )}
-                        <h4 htmlFor="">Genre</h4>
-                      </div>
+                        <div>
+                          {longArtists.items[0]?.genres.length > 0 ? (
+                            <h3>{longArtists.items[0]?.genres}</h3>
+                          ) : (
+                            <h3>-</h3>
+                          )}
+                          <h4 htmlFor="">Genre</h4>
+                        </div>
 
-                      <div>
-                        <h3>{longArtists?.items[0].popularity}</h3>
-                        <h4 htmlFor="">Populatity</h4>
+                        <div>
+                          <h3>{longArtists?.items[0].popularity}</h3>
+                          <h4 htmlFor="">Popularity</h4>
+                        </div>
                       </div>
-                    </div>
-                    <img
-                      className="shadow"
-                      src={longArtists.items[0]?.images[1]?.url}
-                      onClick={() => {
-                        handleTrackClick(tracks.items[0].uri);
-                      }}
-                      alt=""
-                      loading="lazy"
-                    />
+                    )}
+
+                    {longArtists?.items && longArtists.items.length > 0 && (
+                      <img
+                        className="shadow"
+                        src={longArtists.items[0]?.images[1]?.url}
+                        onClick={() => {
+                          handleTrackClick(tracks.items[0].uri);
+                        }}
+                        alt=""
+                        loading="lazy"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

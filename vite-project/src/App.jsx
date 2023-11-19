@@ -7,6 +7,7 @@ import {
   BrowserRouter,
   Routes,
 } from "react-router-dom";
+import Player from "./Player";
 import HomePage from "./HomePage";
 import ProfileComponent from "./ProfilePage";
 import Top50TracksComponent from "./Top50TracksComponent";
