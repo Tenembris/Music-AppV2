@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const RecommendationsComponent = () => {
+const RecommendationsComponent = ({ onRecommendationClick }) => {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedTempo, setSelectedTempo] = useState([]);
   const [selectedMood, setSelectedMood] = useState([]);
@@ -384,6 +384,9 @@ const RecommendationsComponent = () => {
                   backgroundSize: "cover", // Adjust as needed
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
+                }}
+                onClick={() => {
+                  onRecommendationClick(track.uri); // Call the callback
                 }}
               >
                 <div className="RecommendationElementGlassMorph">

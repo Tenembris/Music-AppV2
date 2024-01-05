@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Player from "./Player";
 import useAuth from "./useAuth";
+import ThreeScene from "./MusicVisualizerComponent";
 // import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -25,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-const ProfilePage = ({ code }) => {
+const ProfilePage = ({ code, onRecommendationClick, turnOffPlayer }) => {
   const accessToken = useAuth(code);
   // const history = useHistory();
 
@@ -232,39 +233,6 @@ const ProfilePage = ({ code }) => {
     }
   };
 
-  function togglePlayerClass() {
-    console.log(isDivAdded);
-
-    document.querySelectorAll(".PlayerRSWP").forEach((element) => {
-      element.classList.add("open");
-
-      if (!isDivAdded) {
-        var existingDiv = document.querySelector("._ActionsRSWP.__1irer0f");
-
-        if (existingDiv) {
-          var newDiv = document.createElement("div");
-          newDiv.className = "myNewDiv";
-
-          var newButton = document.createElement("button");
-          newButton.innerHTML = "Close";
-
-          newButton.addEventListener("click", function () {
-            document.querySelectorAll(".PlayerRSWP").forEach((element) => {
-              element.classList.remove("open");
-              togglePlayer();
-            });
-
-            console.log("Button clicked!");
-          });
-
-          newDiv.appendChild(newButton);
-          existingDiv.appendChild(newDiv);
-          setIsDivAdded(true);
-        }
-      }
-    });
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       await getGenres();
@@ -322,12 +290,6 @@ const ProfilePage = ({ code }) => {
       // setToken(accessToken.access_token);
       window.history.pushState({}, null, "/profile");
     }
-    // getData(PLAYLISTS_ENDPOINT, setPlaylists, "playlistsSessionData");
-    // getData(TRACKS_ENDPOINT, setTracks, "tracksSessionData");
-    // getData(ARTISTS_ENDPOINT, setArtists, "artistsSessionData");
-    // getData(PROFILE_ENDPOINT, setProfile, "profileSessionData");
-    // getData(GENRES_ENDPOINT, setGenres, "genresSessionData");
-    // getData(MOOD_ENDPOINT, setMood, "moodSessionData");
   }, []);
   const getNewData = (time_range, type) => {
     let updatedEndpoint = `https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}&limit=12`;
@@ -352,7 +314,10 @@ const ProfilePage = ({ code }) => {
         },
       });
 
+      console.log(response.data.items, "test endpoint2");
+
       const trackIds = response.data.items.map((track) => track.id).join("%2C");
+      console.log(trackIds, "test trackIds");
 
       const moodEndpoint = `https://api.spotify.com/v1/audio-features?ids=${trackIds}`;
       console.log("MOOD_ENDPOINT with track IDs:", moodEndpoint, trackIds);
@@ -367,8 +332,42 @@ const ProfilePage = ({ code }) => {
     }
   };
 
+  // const getMoodDataForTracks = async () => {
+  //   try {
+  //     const response = await axios.get(TRACKS_ENDPOINT2, {
+  //       headers: {
+  //         Authorization: "Bearer " + accessToken,
+  //       },
+  //     });
+
+  //     console.log(response.data.items, "test endpoint2");
+
+  //     const trackIds = response.data.items.map((track) => track.id);
+  //     console.log(trackIds, "test trackIds");
+
+  //     // Assuming a limit of 100 tracks per request
+  //     const limit = 100;
+  //     for (let i = 0; i < trackIds.length; i += limit) {
+  //       const batch = trackIds.slice(i, i + limit);
+  //       const moodEndpoint = `https://api.spotify.com/v1/audio-features?ids=${batch.join(
+  //         "%2C"
+  //       )}`;
+  //       console.log("MOOD_ENDPOINT with track IDs:", moodEndpoint);
+
+  //       // Fetch and process each batch
+  //       // getData(moodEndpoint, setMood, "moodSessionData");
+  //     }
+
+  //     return trackIds;
+  //   } catch (error) {
+  //     console.error(error);
+  //     return null;
+  //   }
+  // };
+
   const calculateAverageMoodData = (moodData) => {
     if (moodData === null) return;
+
     // Inicjalizuj obiekt, który będzie przechowywał sumy cech
     const sum = {
       acousticness: 0,
@@ -382,9 +381,11 @@ const ProfilePage = ({ code }) => {
       valence: 0,
       tempo: 0,
       instrumentalness: 0,
-
       // Dodaj inne cechy w razie potrzeby
     };
+
+    let slowestSongTempo = Infinity;
+    let slowestSongId = null;
 
     // Pobierz tablicę audio_features z moodData
     const audioFeatures = moodData.audio_features;
@@ -398,12 +399,95 @@ const ProfilePage = ({ code }) => {
           sum[key] += feature[key];
         }
       });
+
+      if (feature.tempo < slowestSongTempo) {
+        slowestSongTempo = feature.tempo;
+        slowestSongId = feature.id; // Assuming 'id' is the property that contains the song ID
+      }
     });
+
+    console.log("Sum:", sum);
+    console.log("Slowest Song ID:", slowestSongId);
 
     // Podziel sumy przez liczbę elementów
     Object.keys(sum).forEach((key) => {
       sum[key] /= audioFeatures.length;
     });
+
+    // Update h2 content based on tempo
+    const h2Element = document.getElementById("energyH2");
+    const h3Element = document.getElementById("musicTextH3Energy");
+    const spanElement = document.getElementById("spanTempoMusic");
+    if (h2Element) {
+      console.log(sum.tempo, "test");
+      console.log(sum.tempo < 135);
+      if (sum.tempo >= 60 && sum.tempo <= 99) {
+        h2Element.textContent = "Adagio";
+        spanElement.textContent = "slow";
+      } else if (sum.tempo >= 100 && sum.tempo <= 119) {
+        h2Element.textContent = "Moderato";
+        spanElement.textContent = "moderate";
+      } else if (sum.tempo > 120 && sum.tempo <= 135) {
+        h2Element.textContent = "Allegretto";
+        spanElement.textContent = "fast";
+      } else {
+        h2Element.textContent = "Vivace";
+        console.log(sum.tempo);
+        spanElement.textContent = "very fast";
+      }
+    }
+
+    const h2Element2 = document.getElementById("loudH2");
+    // const h3Element = document.getElementById("musicTextH3Energy");
+    const spanElement2 = document.getElementById("spanLoudMusic");
+
+    if (h2Element2) {
+      console.log(sum.loudness, "test");
+
+      if (sum.loudness >= -60 && sum.loudness <= -40) {
+        h2Element2.textContent = "Serene";
+        spanElement2.textContent = "whisper-quiet";
+      } else if (sum.loudness > -39 && sum.loudness <= -21) {
+        h2Element2.textContent = "Tranquil";
+        spanElement2.textContent = "library-quiet";
+      } else if (sum.loudness > -20 && sum.loudness <= -6) {
+        h2Element2.textContent = "Mellow";
+        spanElement2.textContent = "moderate";
+      } else if (sum.loudness > -5 && sum.loudness <= 0) {
+        h2Element2.textContent = "Energetic";
+        spanElement2.textContent = "loud";
+      } else {
+        h2Element2.textContent = "Thunderhead";
+        spanElement2.textContent = "thunderous";
+        console.log(sum.loudness);
+      }
+    }
+
+    const h2Element3 = document.getElementById("happyH2");
+    // const h3Element = document.getElementById("musicTextH3Energy");
+    const spanElement3 = document.getElementById("spanHappyMusic");
+
+    if (h2Element3) {
+      console.log(sum.valence, "test");
+
+      if (sum.valence >= 0 && sum.valence <= 0.25) {
+        h2Element3.textContent = "Melancholic";
+        spanElement3.textContent = "Contemplation";
+      } else if (sum.valence > 0.25 && sum.valence <= 0.5) {
+        h2Element3.textContent = "Reflective";
+        spanElement3.textContent = "Pondering";
+      } else if (sum.valence > 0.5 && sum.valence <= 0.75) {
+        h2Element3.textContent = "Upbeat";
+        spanElement3.textContent = "Positivity";
+      } else if (sum.valence > 0.75 && sum.valence <= 1) {
+        h2Element3.textContent = "Euphoric";
+        spanElement3.textContent = "Elation";
+      } else {
+        h2Element3.textContent = "Undefined Mood";
+        spanElement3.textContent = "undefined";
+        console.log(sum.valence);
+      }
+    }
 
     return sum;
   };
@@ -411,36 +495,19 @@ const ProfilePage = ({ code }) => {
   // Przykład użycia z obiektem moodSessionData z sessionStorage
   const moodSessionData = JSON.parse(sessionStorage.getItem("moodSessionData"));
   const averageMoodData = calculateAverageMoodData(moodSessionData);
+  let averageTempoBPM = null;
+  let averageValance = null;
+  let averageLoudness = null;
+
+  if (averageMoodData) {
+    // Check if averageMoodData exists before accessing its properties
+    averageTempoBPM = averageMoodData.tempo.toFixed(1);
+    averageValance = averageMoodData.valence;
+    averageLoudness = averageMoodData.loudness.toFixed(1);
+  }
+
   console.log(averageMoodData);
 
-  // useEffect(() => {
-  //   const element = document.querySelector(".favSong");
-  //   const backgroundImage = element.style.backgroundImage;
-
-  //   if (backgroundImage) {
-  //     const imageUrl = backgroundImage.match(/url\(['"]?([^'"]+)['"]?\)/)[1];
-
-  //     const img = new Image();
-  //     img.src = imageUrl;
-
-  //     img.onload = () => {
-  //       const canvas = document.createElement("canvas");
-  //       canvas.width = img.width;
-  //       canvas.height = img.height;
-  //       const ctx = canvas.getContext("2d");
-  //       ctx.drawImage(img, 0, 0);
-  //       const imageData = ctx.getImageData(0, 0, img.width, img.height);
-
-  //       let sum = 0;
-  //       for (let i = 0; i < imageData.data.length; i += 4) {
-  //         sum +=
-  //           imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2];
-  //       }
-
-  //       const brightness = sum / ((imageData.data.length / 4) * 255);
-  //       setIsLightBackground(brightness > 0.5); // Adjust the threshold as needed
-  //     };
-  //   }
   // }, []);
 
   // Wywołaj funkcję
@@ -606,7 +673,7 @@ const ProfilePage = ({ code }) => {
                             <img
                               src={track.album.images[1]?.url}
                               onClick={() => {
-                                handleTrackClick(track.uri);
+                                onRecommendationClick(track.uri);
                                 togglePlayerClass();
                               }}
                               alt=""
@@ -752,6 +819,56 @@ const ProfilePage = ({ code }) => {
               </div>
             </div>
           </div>
+          <div className="section">
+            <div className="TextContainerForThreeJS">
+              <div className="musicAuraPosition" id="MusicAuraEnergyBox">
+                <h2 className="musicAuraH2" id="energyH2"></h2>
+                <h3 className="musicAuraPosition" id="musicTextH3Energy">
+                  You really like to listen to <span id="spanTempoMusic"></span>{" "}
+                  music.
+                  <br />
+                  Your Average Tempo is{" "}
+                  <span>{averageMoodData.tempo.toFixed(1)}</span> BPM
+                  <br />
+                  Your Music energy level:{" "}
+                  <span>{averageMoodData.energy.toFixed(1) * 100}/100</span>
+                  {/* Your slowest song is <span id="slowestTitle"></span>
+                  Your fastest song is <span id="fastestTitle"></span> */}
+                </h3>
+              </div>
+
+              <div className="musicAuraPosition" id="MusicAuraLoudBox">
+                <h2 className="musicAuraH2" id="loudH2"></h2>
+                <h3 className="musicAuraPosition" id="musicTextH3">
+                  Your music taste is <span id="spanLoudMusic"></span>
+                  <br />
+                  Your Average Loudness is{" "}
+                  <span>{averageMoodData.loudness.toFixed(1)}</span> dB
+                </h3>
+              </div>
+
+              <div className="musicAuraPosition" id="MusicAuraHappyBox">
+                <h2 className="musicAuraH2" id="happyH2"></h2>
+                <h3 className="musicAuraPosition" id="musicTextH3">
+                  Your music vibe: <span id="spanHappyMusic"></span>
+                  <br />
+                  Level of valance:{" "}
+                  <span>{averageMoodData.valence.toFixed(1) * 100} /100</span>
+                </h3>
+              </div>
+
+              <div className="happylinebox" id="happylinebox"></div>
+              <div className="loudlinebox" id="louderlinebox"></div>
+
+              <div className="linesBox" id="energylinebox"></div>
+
+              <ThreeScene
+                tempoBPM={averageTempoBPM}
+                loudness={averageLoudness}
+                averageValance={averageValance}
+              />
+            </div>
+          </div>
           <div className="longerSection">
             <div className="MoodContainer">
               <h2>Moods</h2>
@@ -831,12 +948,12 @@ const ProfilePage = ({ code }) => {
         </div>
       )}
 
-      <Player
+      {/* <Player
         accessToken={accessToken}
         trackUri={selectedTrackUri}
         togglePlayer={togglePlayer}
         isPaused={isPaused}
-      />
+      /> */}
     </div>
   );
 };
@@ -853,3 +970,7 @@ export default ProfilePage;
 //dymek na hover
 //https://www.npmjs.com/package/@check-light-or-dark/image
 //https://lenadesign.org/2021/05/15/css-slide-text-animation-slide-effect/
+
+//crendo tempo prękość
+// loudness noises
+// happy color

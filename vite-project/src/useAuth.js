@@ -34,8 +34,6 @@ export default function useAuth(code) {
       })
       .catch((error) => {
         console.error("Error:", error);
-        // Handle error (e.g., redirect to login page)
-        // window.location = "/";
       });
   }, [code]);
 
@@ -60,8 +58,6 @@ export default function useAuth(code) {
         })
         .catch((error) => {
           console.error("Error:", error);
-          // Handle error (e.g., redirect to login page)
-          // window.location = "/";
         });
     }, (expiresIn - 60) * 1000);
 

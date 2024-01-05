@@ -386,10 +386,10 @@ h2 {
 .MoodContainer h2 {
   font-size: 3em;
   padding-left: 40px;
-  padding-top: 20px;
+  padding-top: 50px;
   position: relative;
   right: 30px;
-  top: 30px;
+  top: 60px;
   padding-right: 60px;
 }
 
@@ -458,8 +458,8 @@ h2 {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(8.5px);
   position: fixed;
-  bottom: -100;
-  left: 0;
+  bottom: -100 !important;
+  left: 0 !important;
 }
 
 .PlayerRSWP.open {
@@ -472,6 +472,7 @@ h2 {
   bottom: 0;
   left: 0;
   transition: 0.5s ease-in-out;
+  display: block;
 }
 
 .PlayerRSWP * {
@@ -672,4 +673,115 @@ h2 {
 
 .RecommendationElementGlassMorph :first-child img {
   width: 60%;
+}
+
+.TextContainerForThreeJS {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  color: #f0f0f0;
+}
+
+.musicAuraH2 {
+  /* position: absolute;
+  top: 20%;
+  left: 17%; */
+  /* transform: translate(-50%, -50%); */
+  color: #f0f0f0;
+  font-size: 4em;
+  text-align: center;
+  font-weight: 400;
+  text-align: left;
+}
+
+.linesBox {
+  position: absolute;
+
+  width: 375px;
+  height: 135px;
+  border-left: 3px solid white; /* lewa krawędź */
+  border-top: 0; /* brak krawędzi górnej */
+  border-right: 0; /* brak krawędzi prawej */
+  border-bottom: 3px solid white; /* dolna krawędź */
+}
+
+#energylinebox {
+  top: 45%;
+  left: 12%;
+}
+#louderlinebox {
+  top: 40%;
+  right: 15%;
+}
+
+#happylinebox {
+  bottom: 23%;
+  right: 15%;
+}
+.musicAuraPosition {
+  font-weight: 400;
+}
+
+#musicTextH3 {
+  /* top: 25%;
+  left: 5%; */
+  color: white;
+  max-width: 400px;
+  font-weight: 400;
+}
+
+#MusicAuraEnergyBox {
+  flex-direction: column;
+  position: absolute;
+  top: 15%;
+  left: 3%;
+  display: flex;
+  text-align: left;
+  justify-content: left;
+  align-items: left;
+  width: 400px;
+}
+
+#MusicAuraLoudBox {
+  flex-direction: column;
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  display: flex;
+  text-align: left;
+  justify-content: left;
+  align-items: left;
+  width: 400px;
+}
+
+#MusicAuraHappyBox {
+  flex-direction: column;
+  position: absolute;
+  bottom: 1%;
+  right: 5%;
+  display: flex;
+  text-align: left;
+  justify-content: left;
+  align-items: left;
+  width: 400px;
+}
+
+.loudlinebox {
+  position: absolute;
+  width: 325px;
+  height: 135px;
+  border-left: 0; /* brak krawędzi lewej */
+  border-top: 0; /* brak krawędzi górnej */
+  border-right: 3px solid white; /* prawa krawędź */
+  border-bottom: 3px solid white; /* dolna krawędź */
+}
+
+.happylinebox {
+  position: absolute;
+  width: 25em;
+  height: 135px;
+  border-left: 0;
+  border-top: 0;
+  border-right: 3px solid white;
+  border-top: 3px solid white;
 }
