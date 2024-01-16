@@ -24,6 +24,14 @@ body {
     rgba(255, 0, 56, 1) 100%
   );
 }
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .wrapper {
   display: flex;
 }
@@ -208,7 +216,7 @@ h2 {
   background: rgba(0, 0, 0, 0.22);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(10px);
 }
 
@@ -645,15 +653,18 @@ h2 {
   align-items: center;
 }
 
-.DataForRecommendations .top10Tracks {
+/* .DataForRecommendations .top10Tracks {
   width: 60%;
-}
+} */
 
 .recomendations-options {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #f0f0f0;
+  margin: 10px;
+  padding: 10px;
 }
 
 .RecommendationElementGlassMorph {
@@ -784,4 +795,25 @@ h2 {
   border-top: 0;
   border-right: 3px solid white;
   border-top: 3px solid white;
+}
+
+.generate-recommendatonButton {
+  padding: 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.01);
+  color: #f0f0f0;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 1.5em;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.generate-recommendatonButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05); /* Optional: Add a slight scaling effect on hover */
 }

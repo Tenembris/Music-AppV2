@@ -16,24 +16,28 @@ const HomePage = () => {
     "&scope=streaming%20user-read-email%20user-read-private%20user-read-playback-state%20user-modify-playback-state%20user-top-read";
   return (
     <>
-      <div className="wrapper">
-        <div className="static-txt">Find your Spotify</div>
-        <ul className="dynamic-txts">
-          <li>
-            <span>stats</span>
-          </li>
-          <li>
-            <span>mixes</span>
-          </li>
-          <li>
-            <span>vocals</span>
-          </li>
-          <li>
-            <span>music</span>
-          </li>
-        </ul>
+      <div className="main-wrapper">
+        <div className="wrapper">
+          <div className="static-txt">Find your Spotify</div>
+          <ul className="dynamic-txts">
+            <li>
+              <span>stats</span>
+            </li>
+            <li>
+              <span>mixes</span>
+            </li>
+            <li>
+              <span>vocals</span>
+            </li>
+            <li>
+              <span>music</span>
+            </li>
+          </ul>
+        </div>
+        <a className="genre-button" href={AUTH_URL}>
+          Login with spotify
+        </a>
       </div>
-      <a href={AUTH_URL}>Login with spotify</a>
     </>
   );
 };

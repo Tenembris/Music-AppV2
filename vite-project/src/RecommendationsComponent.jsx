@@ -93,10 +93,13 @@ const RecommendationsComponent = ({ onRecommendationClick }) => {
       );
 
       setSelectedGenres([]);
-      setSelectedTempo(null);
-      setSelectedMood();
+      setSelectedTempo([]);
+      setSelectedMood([]);
       setSelectedArtistId([]);
       setSelectedTrackId([]);
+      setMaxValence([]);
+      setMinValence([]);
+
       console.log(recommendationURL);
     } catch (error) {
       console.error(error);
@@ -365,7 +368,10 @@ const RecommendationsComponent = ({ onRecommendationClick }) => {
           </div>
         </div>
 
-        <button onClick={generateRecommendations} className="genre-button">
+        <button
+          onClick={generateRecommendations}
+          className="generate-recommendatonButton"
+        >
           Generate Recommendations
         </button>
       </div>

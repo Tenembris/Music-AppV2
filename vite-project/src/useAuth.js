@@ -25,7 +25,7 @@ export default function useAuth(code) {
         setRefreshToken(refreshToken);
         setExpiresIn(expiresIn);
 
-        // Zapisz w localStorage
+        // Save to localStorage
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         localStorage.setItem("expiresIn", expiresIn);
@@ -37,32 +37,53 @@ export default function useAuth(code) {
       });
   }, [code]);
 
+  // Function to check token validity
+  const checkTokenValidity = async () => {
+    try {
+      await axios.get("http://localhost:3001/protected-resource", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(true); // Token is valid
+    } catch (error) {
+      console.error("Token validation error:", error);
+      console.log(false); // Token is valid // Token is invalid
+    }
+  };
+
   useEffect(() => {
     if (!refreshToken || !expiresIn) return;
-    const timeout = setTimeout(() => {
-      axios
-        .post("http://localhost:3001/refresh", {
-          refreshToken,
-        })
-        .then((res) => {
-          console.log(res.data);
+    const timeout = setTimeout(async () => {
+      const isTokenValid = await checkTokenValidity();
+      if (isTokenValid) {
+        // Token is still valid, refresh it
+        axios
+          .post("http://localhost:3001/refresh", {
+            refreshToken,
+          })
+          .then((res) => {
+            console.log(res.data);
 
-          const { accessToken, expiresIn } = res.data;
+            const { accessToken, expiresIn } = res.data;
 
-          setAccessToken(accessToken);
-          setExpiresIn(expiresIn);
+            setAccessToken(accessToken);
+            setExpiresIn(expiresIn);
 
-          // Zapisz w localStorage
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("expiresIn", expiresIn);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+            // Save to localStorage
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("expiresIn", expiresIn);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        // Token is no longer valid, handle as needed (e.g., redirect to login)
+      }
     }, (expiresIn - 60) * 1000);
 
     return () => clearTimeout(timeout);
-  }, [refreshToken, expiresIn]);
+  }, [refreshToken, expiresIn, accessToken]);
 
   return accessToken;
 }

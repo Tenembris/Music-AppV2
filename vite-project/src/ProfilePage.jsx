@@ -34,6 +34,8 @@ const ProfilePage = ({ code, onRecommendationClick, turnOffPlayer }) => {
   //   history.push("/top50");
   // };
 
+  console.log(accessToken);
+
   const [playlists, setPlaylists] = useState({});
   const [artists, setArtists] = useState({});
   const [tracks, setTracks] = useState([]);
@@ -571,7 +573,7 @@ const ProfilePage = ({ code, onRecommendationClick, turnOffPlayer }) => {
             </Link>
 
             <Link to="/recommendations" className="button-link">
-              recommendations
+              Recommendations
             </Link>
           </div>
         </div>
