@@ -17,6 +17,7 @@ import RecommendationsComponent from "./RecommendationsComponent";
 const App = () => {
   const [selectedTrackUri, setSelectedTrackUri] = useState(null);
   const [isPaused, setPaused] = useState(false);
+  // dsadas
   const [isDivAdded, setIsDivAdded] = useState(false);
   const [isPlayerOpen, setIsPlayerOpen] = useState(false);
 
